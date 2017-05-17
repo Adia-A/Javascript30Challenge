@@ -62,16 +62,9 @@
     
     document.addEventListener("keydown", function(event) {
         var currentKey = event.which;
-        var audioTags = document.getElementsByTagName("audio");
+        var currentAudio = document.querySelector(`audio[data-key='${currentKey}']`);
         
-        for(var i = 0; i < audioTags.length; i++) {
-            
-            if(currentKey == audioTags[i].dataset.key) {
-                
-                audioTags[i].play();
-                break;
-            }
-        }
+        currentAudio.play();
         
     });
 
