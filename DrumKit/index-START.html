@@ -59,27 +59,50 @@
 
 <script>
     
-    //Check to see if a key has been pressed
-    document.addEventListener("keydown", function(event) {
+    //Logic for playing sound on keypress
+    function playSound(event) {
         var currentKey = event.which; //Returns key pressed
-        var currentAudio = document.querySelector(`audio[data-key='${currentKey}']`); //Gets audio node
-        var currentBlock = document.querySelector(`div[data-key='${currentKey}']`); //Gets div node
+        const currentAudio = document.querySelector(`audio[data-key='${currentKey}']`); //Gets audio node
+        const currentBlock = document.querySelector(`div[data-key='${currentKey}']`); //Gets div node
         
-        //When audio is played add playing class
+        //Check to see if audio exists, stop function if null/doesn't exist
+        if(!currentAudio) return;
+        
+        //Rewind audio to beginning so if button is mashed it replays audio
+        currentAudio.currentTime = 0;
+        
+        /* Uncomment this to add transitions that match the sound length
         currentAudio.onplay = function() {
             currentBlock.classList.add("playing");
         }
-        
-        //When audio has ended remove playing class
+
         currentAudio.onended = function() {
             currentBlock.classList.remove("playing");
-        }
-        
+        }*/
+
         //Play current audio
         currentAudio.play();
         
+        //Add transition class animation
+        currentBlock.classList.add("playing");
         
-    });
+        
+        
+    }
+    
+    function removeTransition(event) {
+        if(event.propertyName !== 'transform') return; //Only need to worry about transforms
+        
+        //Remove transition class animation
+        this.classList.remove("playing");
+    }
+    
+    //Get all key divs
+    const keys = document.querySelectorAll(".key");
+    //Run function on keypress
+    document.addEventListener("keydown", playSound);
+    //Add an event listener for all elements in key divs for when a transition ends then call function removeTransition
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
 </script>
 
