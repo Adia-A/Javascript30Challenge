@@ -63,8 +63,18 @@
     document.addEventListener("keydown", function(event) {
         var currentKey = event.which;
         var currentAudio = document.querySelector(`audio[data-key='${currentKey}']`);
+        var currentBlock = document.querySelector(`div[data-key='${currentKey}']`);
+        
+        currentAudio.onplay = function() {
+            currentBlock.classList.add("playing");
+        }
+        
+        currentAudio.onended = function() {
+            currentBlock.classList.remove("playing");
+        }
         
         currentAudio.play();
+        
         
     });
 
