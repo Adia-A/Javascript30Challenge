@@ -59,20 +59,23 @@
 
 <script>
     
-    
+    //Check to see if a key has been pressed
     document.addEventListener("keydown", function(event) {
-        var currentKey = event.which;
-        var currentAudio = document.querySelector(`audio[data-key='${currentKey}']`);
-        var currentBlock = document.querySelector(`div[data-key='${currentKey}']`);
+        var currentKey = event.which; //Returns key pressed
+        var currentAudio = document.querySelector(`audio[data-key='${currentKey}']`); //Gets audio node
+        var currentBlock = document.querySelector(`div[data-key='${currentKey}']`); //Gets div node
         
+        //When audio is played add playing class
         currentAudio.onplay = function() {
             currentBlock.classList.add("playing");
         }
         
+        //When audio has ended remove playing class
         currentAudio.onended = function() {
             currentBlock.classList.remove("playing");
         }
         
+        //Play current audio
         currentAudio.play();
         
         
